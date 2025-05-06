@@ -56,11 +56,13 @@ def obtener_resultados(url, jugadores_objetivos):
     escenario = "Escenario desconocido"
 
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
+    options.binary_location = "/usr/local/bin/chrome"
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver", options=options)
 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+
 
     try:
         driver.get(url)
