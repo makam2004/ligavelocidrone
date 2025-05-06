@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Velocidrone - Race Mode</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333333;
+        }
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        strong {
+            color: #222;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Resultado para "Lacasito" - Race Mode</h1>
+        <p><strong>Tiempo:</strong> {{ tiempo }}</p>
+        <p><strong>Posición:</strong> {{ posicion }}</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Liga Velocidrone Semana {{ semana }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body>
+    <div class="top-bar">
+        <img src="https://www.velocidrone.com/assets/images/VelocidroneLogoWeb.png" alt="Logo Velocidrone" style="width: 150px;">
+        <h1>Liga Velocidrone Semana {{ semana }}</h1>
+    </div>
+
+    <div class="card">
+        <h3>Alta Piloto</h3>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="mensaje {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form method="post">
+            <input type="text" name="nuevo_piloto" placeholder="Nombre del piloto">
+            <input type="text" name="pais" placeholder="Código de país (ej. es)">
+            <label><input type="checkbox" name="soy_humano"> No soy un robot</label><br><br>
+            <input type="submit" value="Añadir">
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Ranking Semanal</h2>
+        <div class="ranking">
+            <div>
+                <h3>Track 1</h3>
+                <ul>
+                    {% for tiempo, piloto in resultados[0] %}
+                    <li>
+                        <img src="https://flagcdn.com/16x12/{{ jugadores | selectattr('nombre', 'equalto', piloto) | map(attribute='pais') | first }}.png" alt="{{ piloto }}">
+                        {{ piloto }}: {{ tiempo }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h3>Track 2</h3>
+                <ul>
+                    {% for tiempo, piloto in resultados[1] %}
+                    <li>
+                        <img src="https://flagcdn.com/16x12/{{ jugadores | selectattr('nombre', 'equalto', piloto) | map(attribute='pais') | first }}.png" alt="{{ piloto }}">
+                        {{ piloto }}: {{ tiempo }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Puntuación</h3>
+        <ul>
+            {% for jugador, puntos in puntuaciones.items() %}
+            <li>
+                <img src="https://flagcdn.com/16x12/{{ jugadores | selectattr('nombre', 'equalto', jugador) | map(attribute='pais') | first }}.png" alt="{{ jugador }}">
+                {{ jugador }}: {{ puntos }} puntos
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</body>
+</html>
