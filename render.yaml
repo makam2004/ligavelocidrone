@@ -1,9 +1,12 @@
 services:
   - type: web
-    name: liga-velocidrone
+    name: velocidrone-app
     env: python
-    buildCommand: ""
+    buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.10
+      - key: PYTHONUNBUFFERED
+        value: "true"
+    preDeployCommand: |
+      apt-get update
+      apt-get install -y chromium-browser
