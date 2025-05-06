@@ -62,7 +62,7 @@ def obtener_resultados(url, jugadores_objetivos):
     options.add_argument('--disable-dev-shm-usage')
     service = Service(ChromeDriverManager().install())
 
-
+    driver = None
 
     try:
         # Crear el driver de Chrome utilizando el servicio
@@ -101,7 +101,8 @@ def obtener_resultados(url, jugadores_objetivos):
     except Exception as e:
         resultados.append((float('inf'), f"Error: {e}", ""))
     finally:
-        driver.quit()
+            if driver:
+                driver.quit()
 
     return escenario, nombre_track, resultados
 
