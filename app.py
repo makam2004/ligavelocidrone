@@ -55,33 +55,40 @@ def obtener_resultados(url, jugadores_objetivos):
     nombre_track = "Track desconocido"
     escenario = "Escenario desconocido"
 
-    options = webdriver.ChromeOptions()
-    options.binary_location = "/usr/local/bin/chrome"
-    options.add_argument("--headless")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver", options=options)
+    options = Options()
+    options.add_argument('--headless')  # Ejecutar Chrome en segundo plano
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    service = Service(ChromeDriverManager().install())
 
 
 
     try:
+        # Crear el driver de Chrome utilizando el servicio
+        driver = webdriver.Chrome(service=service, options=options)
+
         driver.get(url)
         wait = WebDriverWait(driver, 10)
 
+        # Extraer el escenario y nombre del track
         escenario_elem = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "h2.text-center")))
         escenario = escenario_elem.text.strip()
 
         encabezado = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.container h3")))
         nombre_track = encabezado.text.strip()
 
+        # Hacer clic en la pestaña de "Race Mode"
         race_tab = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Race Mode')]")))
         race_tab.click()
 
+        # Esperar que se carguen los resultados
         wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "tbody tr")))
         time.sleep(1.5)
 
+        # Extraer las filas de la tabla con los resultados
         filas = driver.find_elements(By.CSS_SELECTOR, "tbody tr")
 
+        # Extraer el nombre de los jugadores y su tiempo, si están en la lista de jugadores
         for fila in filas[:50]:
             columnas = fila.find_elements(By.TAG_NAME, "td")
             if len(columnas) >= 3:
