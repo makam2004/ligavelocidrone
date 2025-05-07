@@ -2,8 +2,6 @@ services:
   - type: web
     name: velocidrone-app
     env: python
-    buildCommand: ./render-build.sh
-    startCommand: gunicorn app:app
-    envVars:
-      - key: PORT
-        value: 10000
+    buildCommand: ""  # No necesario para Python
+    startCommand: ./start.sh
+    plan: free

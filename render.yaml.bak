@@ -2,11 +2,8 @@ services:
   - type: web
     name: velocidrone-app
     env: python
-    buildCommand: pip install -r requirements.txt
+    buildCommand: ./render-build.sh
     startCommand: gunicorn app:app
     envVars:
-      - key: PYTHONUNBUFFERED
-        value: "true"
-    preDeployCommand: |
-      apt-get update
-      apt-get install -y chromium-browser
+      - key: PORT
+        value: 10000
