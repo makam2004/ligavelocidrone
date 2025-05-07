@@ -56,18 +56,18 @@ def obtener_resultados(url, jugadores_objetivos):
     nombre_track = "Track desconocido"
     escenario = "Escenario desconocido"
 
-options = Options()
-options.binary_location = "/usr/bin/google-chrome"
-options.add_argument('--headless')
-options.add_argument('--no-sandbox')
-options.add_argument('--disable-dev-shm-usage')
+    options = Options()
+    options.binary_location = "/usr/bin/google-chrome"
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
 
 service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service, options=options)
+    driver = webdriver.Chrome(service=service, options=options)
 
     try:
-        # Crear el driver de Chrome utilizando el servicio
-        driver = webdriver.Chrome()
+        driver.get(url)
+        wait = WebDriverWait(driver, 10)
 
         driver.get('https://selenium.dev/documentation')
         assert 'Selenium' in driver.title
