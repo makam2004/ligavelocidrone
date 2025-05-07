@@ -1,33 +1,32 @@
-# Usa una imagen base de Python
+# Usa una imagen base ligera de Python
 FROM python:3.11-slim
 
-# Actualiza los paquetes e instala dependencias de Chrome
-RUN apt-get update \
-    && apt-get install -y \
-    wget \
-    curl \
-    gnupg2 \
-    unzip \
-    ca-certificates \
-    && curl -sSL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o google-chrome.deb \
-    && dpkg -i google-chrome.deb \
-    && apt-get install -f -y
+# Instala dependencias del sistema
+RUN apt-get update && apt-get install -y \
+    wget unzip curl gnupg2 fonts-liberation \
+    libasound2 libatk1.0-0 libatk-bridge2.0-0 libcups2 \
+    libdbus-1-3 libgdk-pixbuf2.0-0 libnspr4 libnss3 \
+    libx11-xcb1 libxcomposite1 libxdamage1 libxrandr2 \
+    libu2f-udev libvulkan1 libxss1 libxtst6 xdg-utils \
+    --no-install-recommends
 
-# Instala ChromeDriver
-RUN curl -sSL https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip -o chromedriver.zip \
-    && unzip chromedriver.zip -d /usr/local/bin/ \
-    && chmod +x /usr/local/bin/chromedriver
+# Instala Google Chrome
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+    apt install -y ./google-chrome-stable_current_amd64.deb && \
+    rm google-chrome-stable_current_amd64.deb
 
-# Instala dependencias de Python
+# Crea una carpeta para la app
 WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia el código fuente de la aplicación
+# Copia los archivos
 COPY . .
 
-# Expón el puerto en el que la aplicación correrá
-EXPOSE 5000
+# Instala las dependencias de Python
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-# Comando para ejecutar la aplicación
-CMD ["python", "app.py"]
+# Expón el puerto
+EXPOSE 10000
+
+# Comando para ejecutar tu app
+CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:10000"]
