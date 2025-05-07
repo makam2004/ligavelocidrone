@@ -63,7 +63,7 @@ def obtener_resultados(url, jugadores_objetivos):
     options.add_argument('--disable-dev-shm-usage')
     service = Service(ChromeDriverManager().install())
 
-    driver = None
+    driver = webdriver.Chrome(service=service, options=options)
 
     try:
         # Crear el driver de Chrome utilizando el servicio

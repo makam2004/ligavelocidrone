@@ -61,9 +61,9 @@ def obtener_resultados(url, jugadores_objetivos):
     options.add_argument('--headless')  # Ejecutar Chrome en segundo plano
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-    service = Service(ChromeDriverManager().install())
+    service = Service(ChromeDriverManager().install()
 
-    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+    driver = webdriver.Chrome(service=service, options=options)
 
     try:
         # Crear el driver de Chrome utilizando el servicio
