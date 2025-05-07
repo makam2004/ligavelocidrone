@@ -62,14 +62,18 @@ def obtener_resultados(url, jugadores_objetivos):
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
 
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=options)
+    service = Service(executable_path="/path/to/chromedriver")
+    driver = webdriver.Chrome()
 
     try:
         # Crear el driver de Chrome utilizando el servicio
         driver = webdriver.Chrome(service=service, options=options)
 
-        driver.get(url)
+        driver.get('https://selenium.dev/documentation')
+        assert 'Selenium' in driver.title
+        elem = driver.find_element(By.ID, 'm-documentationwebdriver')
+        elem.click()
+        assert 'WebDriver' in driver.title
         wait = WebDriverWait(driver, 10)
 
         # Extraer el escenario y nombre del track
