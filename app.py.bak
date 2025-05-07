@@ -57,6 +57,7 @@ def obtener_resultados(url, jugadores_objetivos):
     escenario = "Escenario desconocido"
 
     options = Options()
+    options.binary_location = "/usr/bin/chromium"
     options.add_argument('--headless')  # Ejecutar Chrome en segundo plano
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
