@@ -1,12 +1,6 @@
 services:
   - type: web
-    name: velocidrone-app
+    name: liga-velocidrone
     env: python
-    buildCommand: |
-      apt-get update && \
-      apt-get install -y chromium && \
-      pip install -r requirements.txt
+    buildCommand: ./install_chrome.sh && pip install -r requirements.txt
     startCommand: gunicorn app:app
-    envVars:
-      - key: PYTHONUNBUFFERED
-        value: "1"
