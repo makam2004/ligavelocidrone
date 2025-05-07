@@ -1,9 +1,10 @@
 #!/bin/bash
 set -ex
 
-# Instala Chromium
+# Instala Chromium desde el repositorio estándar
 apt-get update
-apt-get install -y chromium
+apt-get install -y chromium-browser
 
-# Crea enlace simbólico para que esté disponible en /usr/bin/chromium
-ln -s /usr/bin/chromium /usr/bin/google-chrome
+# Asegura que los enlaces simbólicos existan
+ln -sf /usr/bin/chromium-browser /usr/bin/chromium
+ln -sf /usr/bin/chromium-browser /usr/bin/google-chrome
