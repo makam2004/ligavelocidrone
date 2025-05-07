@@ -50,9 +50,9 @@ def obtener_resultados(url, jugadores_objetivos):
     nombre_track = "Track desconocido"
     escenario = "Escenario desconocido"
 
-    options = Options()
+options = Options()
 options.binary_location = "/usr/bin/google-chrome"
-options.add_argument('--headless=new')  # usa la nueva arquitectura de Chrome Headless
+options.add_argument('--headless=new')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 options.add_argument('--disable-gpu')
@@ -66,8 +66,8 @@ options.add_argument('--mute-audio')
 options.add_argument('--no-zygote')
 options.add_argument('--single-process')
 
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=options)
+service = Service(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=service, options=options)
 
     try:
         driver.get(url)
